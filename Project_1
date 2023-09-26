@@ -1,0 +1,46 @@
+#Project_1- Deploy a Two-Tier application using Docker
+
+Steps-
+1- Create a EC2 instance and install docker in it using below script.
+#!/bin/bash
+sudo apt update
+sudo apt install -y docker.io
+
+2. Add user to the docker Group and reboot the system -
+sudo usermod -aG docker $USER
+sudo reboot
+
+3. Clone the project in your local Working directory
+git clone https://github.com/seematripathi/DevOps_Projects.git
+
+4.Build image for the Dockerfile
+docker build . -t twotierapp-
+
+5.Create a docker network
+docker network create twotiernetwork
+
+6.Create the container from the image for the application and the mysql
+docker run -d -p 5000:5000 --network=twotiernetwork -e MYSQL_HOST=mysql -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin -e MYSQL_DB=my_db --name twotierapp-cont twotierapp-img
+docker run -d -p 3306:3306 --network=twotiernetwork -e MYSQL_DATABASE=my_db -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin -e MYSQL_ROOT_PASSWORD=admin  --name mysql mysql:5.7
+
+Open port 5000 for the EC2 instance to allow incoming traffic
+
+7.Go inside MYSQL container and create a table 
+docker exec -it mysql bash
+mysql -u username -p user_pass
+
+use my_db;
+
+CREATE TABLE messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    message TEXT
+);
+
+Now, we should be able to access the application using ipaddress:5000
+
+
+
+
+
+
+
