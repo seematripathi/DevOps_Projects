@@ -1,0 +1,41 @@
+#Steps to install jenkins in ubuntu: (EC2 instance)
+
+
+#Java installation is mandatory to setup the jenkins
+#Install java 
+
+sudo apt update
+sudo apt install -y fontconfig openjdk-17-jre
+java -version
+
+#Now install jenkins
+
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install -y jenkins
+
+#Once jenkins is installed we can validate it using 
+jenkins --version
+
+For the EC2 instance expose port 8080 but adding the inbound rule in security group
+
+We can get password at below location to login for the first time
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+Enter the admin key in the console to begin with jenkins
+
+
+
+
+
+
+
+
+
+
+
+
