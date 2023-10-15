@@ -32,6 +32,13 @@ Master & Worker Node  Steps:
   sudo kubeadm init 
  # Expose port 6377 in security group 
 
+# To start using your cluster, we need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+
 #Worker Node : 
   sudo kubeadm reset pre-flight checks
   #Worker node can join the cluster using below command 
